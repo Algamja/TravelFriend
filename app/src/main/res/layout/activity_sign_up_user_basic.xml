@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha=".30"
-        android:src="@drawable/ic_travle_friend_logo" />
+        android:src="@drawable/ic_travel_friend_logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
