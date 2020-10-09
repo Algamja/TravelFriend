@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="textViewFont" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/nanum_font</item>
+    </style>
+    <style name="editTextFont" parent="Widget.AppCompat.EditText">
+        <item name="fontFamily">@font/nanum_font</item>
+    </style>
+    <style name="radioButtonFont" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="fontFamily">@font/nanum_font</item>
+    </style>
+    <style name="buttonFont" parent="Widget.AppCompat.Button">
+        <item name="fontFamily">@font/nanum_font</item>
+    </style>
 </resources>
