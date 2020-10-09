@@ -6,18 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
 
-    <style name="textViewFont" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/nanum_font</item>
-    </style>
-    <style name="editTextFont" parent="Widget.AppCompat.EditText">
-        <item name="fontFamily">@font/nanum_font</item>
-    </style>
-    <style name="radioButtonFont" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="fontFamily">@font/nanum_font</item>
-    </style>
-    <style name="buttonFont" parent="Widget.AppCompat.Button">
-        <item name="fontFamily">@font/nanum_font</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="editTextStyle">@style/EditTextStyle</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
+        <item name="android:checkboxStyle">@style/CheckboxStyle</item>
     </style>
 </resources>
