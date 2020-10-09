@@ -3,6 +3,7 @@ package com.example.travelfriend
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_up_email_and_password.*
@@ -14,8 +15,10 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email_and_password)
 
-        auth = FirebaseAuth.getInstance()
+        //이메일 회원가입 시키기 전 로딩바가 보이지 않게 설정
+        sign_up_create_email_loading_progress_bar.visibility = View.GONE
 
+        auth = FirebaseAuth.getInstance()
         sign_up_first_next_button.setOnClickListener(){
             val email = sign_up_email_input.text.toString()
             val pw1 = sign_up_password_input.text.toString()
@@ -27,6 +30,7 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
                 Toast.makeText(this, "이메일 또는 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
             }
             else{
+                sign_up_create_email_loading_progress_bar.visibility = View.VISIBLE
                 createEmail()
             }
         }
@@ -36,10 +40,11 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
     fun createEmail(){
         auth?.createUserWithEmailAndPassword(sign_up_email_input.text.toString(),sign_up_password_input.text.toString())
             ?.addOnCompleteListener {
-
                 if(it.isSuccessful) {
+                    sign_up_create_email_loading_progress_bar.visibility = View.GONE
                     startActivity(Intent(this, SignUpUserBasicActivity::class.java))
-                }else if (!it.exception.toString().isNullOrEmpty()){
+                }else if (it.exception.toString().isNotEmpty()){
+                    sign_up_create_email_loading_progress_bar.visibility = View.GONE
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
