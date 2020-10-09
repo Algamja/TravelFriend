@@ -16,11 +16,15 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        sign_up_next_button.setOnClickListener(){
+        sign_up_first_next_button.setOnClickListener(){
+            val email = sign_up_email_input.text.toString()
             val pw1 = sign_up_password_input.text.toString()
             val pw2 = sign_up_password_check_input.text.toString()
             if(pw1!=pw2){
-                Toast.makeText(this,"password is not same",Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show()
+            }
+            else if(email.isEmpty() || pw1.isEmpty()){
+                Toast.makeText(this, "이메일 또는 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show()
             }
             else{
                 createEmail()
@@ -32,6 +36,7 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
     fun createEmail(){
         auth?.createUserWithEmailAndPassword(sign_up_email_input.text.toString(),sign_up_password_input.text.toString())
             ?.addOnCompleteListener {
+
                 if(it.isSuccessful) {
                     startActivity(Intent(this, SignUpUserBasicActivity::class.java))
                 }else if (!it.exception.toString().isNullOrEmpty()){
