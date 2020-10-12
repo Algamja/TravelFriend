@@ -1,15 +1,15 @@
 package com.example.travelfriend.database.model
 
 data class Review(
-    val writer: String,
-    val comment: MutableList<Comment>,
-    val like: MutableList<Like>,
-    val image: MutableList<Image>
+    var writer: String,
+    var comment: Map<String,String>,
+    var like: Map<String,Boolean>,
+    var image: Map<String,String>
 ) {
     constructor() : this(
         "",
-        mutableListOf<Comment>(Comment()),
-        mutableListOf<Like>(Like()),
-        mutableListOf<Image>(Image())
+        hashMapOf<String, String>(),
+        hashMapOf<String,Boolean>(),
+        hashMapOf<String, String>()
     )
 }

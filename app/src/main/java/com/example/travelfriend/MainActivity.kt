@@ -14,5 +14,9 @@ class MainActivity : AppCompatActivity() {
         main_sign_up_button.setOnClickListener(){
             startActivity(Intent(this,SignUpEmailAndPasswordActivity::class.java))
         }
+
+        main_login_button.setOnClickListener(){
+            startActivity(Intent(this,LoginActivity::class.java))
+        }
     }
 }
