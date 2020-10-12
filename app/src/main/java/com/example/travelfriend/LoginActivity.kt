@@ -1,5 +1,6 @@
 package com.example.travelfriend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -20,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
         auth?.signInWithEmailAndPassword(login_email_input.text.toString(),login_password_input.text.toString())
             ?.addOnCompleteListener {
                 if(it.isSuccessful){
+                    val intent = Intent(this,HomeActivity::class.java)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this,"아이디 또는 비밀번호를 확인하세요", Toast.LENGTH_LONG).show()
                 }
