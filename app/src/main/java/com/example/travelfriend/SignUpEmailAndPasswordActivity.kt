@@ -12,13 +12,16 @@ import kotlinx.android.synthetic.main.activity_sign_up_email_and_password.*
 class SignUpEmailAndPasswordActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var GOOGLE_LOGIN_CODE = 9001
-    val email = sign_up_email_input.text.toString()
-    val pw1 = sign_up_password_input.text.toString()
-    val pw2 = sign_up_password_check_input.text.toString()
+    lateinit var email : String
+    lateinit var pw1 : String
+    lateinit var pw2 : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email_and_password)
 
+        email = sign_up_email_input.text.toString()
+        pw1 = sign_up_password_input.text.toString()
+        pw2 = sign_up_password_check_input.text.toString()
         //이메일 회원가입 시키기 전 로딩바가 보이지 않게 설정
         sign_up_create_email_loading_progress_bar.visibility = View.GONE
 
@@ -45,6 +48,8 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
                 if(it.isSuccessful) {
                     sign_up_create_email_loading_progress_bar.visibility = View.GONE
                     val intent = Intent(this, SignUpUserBasicActivity::class.java)
+                    email = sign_up_email_input.text.toString()
+                    pw1 = sign_up_password_input.text.toString()
                     intent.putExtra("email",email)
                     intent.putExtra("pw",pw1)
                     startActivity(intent)
