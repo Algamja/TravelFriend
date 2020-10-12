@@ -15,7 +15,7 @@ class SignUpUserBasicActivity : AppCompatActivity() {
         val input_phone = sign_up_phone_number_input.text.toString()
 
         sign_up_second_next_button.setOnClickListener(){
-            val intent = Intent(this,Sign_up_user_detail::class.java)
+            val intent = Intent(this,SignUpUserDetailActivity::class.java)
             intent.putExtra("name",input_name)
             intent.putExtra("phone",input_phone)
         startActivity(intent)

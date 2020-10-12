@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.activity_sign_up_email_and_password.*
 class SignUpEmailAndPasswordActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var GOOGLE_LOGIN_CODE = 9001
+    val email = sign_up_email_input.text.toString()
+    val pw1 = sign_up_password_input.text.toString()
+    val pw2 = sign_up_password_check_input.text.toString()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email_and_password)
@@ -21,9 +24,7 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()   //auth : 회원가입에 관련된 정보들을 쓸 수 있게해줌
         sign_up_first_next_button.setOnClickListener(){
-            val email = sign_up_email_input.text.toString()
-            val pw1 = sign_up_password_input.text.toString()
-            val pw2 = sign_up_password_check_input.text.toString()
+
             if(pw1!=pw2){
                 Toast.makeText(this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show()
             }
@@ -43,7 +44,10 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
             ?.addOnCompleteListener {
                 if(it.isSuccessful) {
                     sign_up_create_email_loading_progress_bar.visibility = View.GONE
-                    startActivity(Intent(this, SignUpUserBasicActivity::class.java))
+                    val intent = Intent(this, SignUpUserBasicActivity::class.java)
+                    intent.putExtra("email",email)
+                    intent.putExtra("pw",pw1)
+                    startActivity(intent)
                 }else if (it.exception.toString().isNotEmpty()){
                     sign_up_create_email_loading_progress_bar.visibility = View.GONE
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
