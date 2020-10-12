@@ -12,7 +12,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         auth = FirebaseAuth.getInstance()
+
         login_button.setOnClickListener(){
             loginEmail()
         }
@@ -21,8 +23,7 @@ class LoginActivity : AppCompatActivity() {
         auth?.signInWithEmailAndPassword(login_email_input.text.toString(),login_password_input.text.toString())
             ?.addOnCompleteListener {
                 if(it.isSuccessful){
-                    val intent = Intent(this,HomeActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, HomeActivity::class.java))
                 }else{
                     Toast.makeText(this,"아이디 또는 비밀번호를 확인하세요", Toast.LENGTH_LONG).show()
                 }
