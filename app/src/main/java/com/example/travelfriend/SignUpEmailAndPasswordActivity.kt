@@ -19,15 +19,15 @@ class SignUpEmailAndPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email_and_password)
 
-        email = sign_up_email_input.text.toString()
-        pw1 = sign_up_password_input.text.toString()
-        pw2 = sign_up_password_check_input.text.toString()
+
         //이메일 회원가입 시키기 전 로딩바가 보이지 않게 설정
         sign_up_create_email_loading_progress_bar.visibility = View.GONE
 
         auth = FirebaseAuth.getInstance()   //auth : 회원가입에 관련된 정보들을 쓸 수 있게해줌
         sign_up_first_next_button.setOnClickListener(){
-
+            email = sign_up_email_input.text.toString()
+            pw1 = sign_up_password_input.text.toString()
+            pw2 = sign_up_password_check_input.text.toString()
             if(pw1!=pw2){
                 Toast.makeText(this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show()
             }
