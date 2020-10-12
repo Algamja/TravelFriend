@@ -11,8 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main_sign_up_button.setOnClickListener(){
-            startActivity(Intent(this,SignUpEmailAndPasswordActivity::class.java))
+        main_sign_up_button.setOnClickListener() {
+            startActivity(Intent(this, SignUpEmailAndPasswordActivity::class.java))
+        }
+
+        main_login_button.setOnClickListener() {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }
