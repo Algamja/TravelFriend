@@ -20,7 +20,8 @@
             app:fillColor="@color/colorBlue01"
             app:layout_constraintTop_toTopOf="parent"
             app:radius="6dp"
-            app:strokeColor="@color/colorBlack01" />
+            app:strokeColor="@color/colorBlack01"
+            app:autoPlay="false"/>
 
         <LinearLayout
             android:id="@+id/item_home_line"
