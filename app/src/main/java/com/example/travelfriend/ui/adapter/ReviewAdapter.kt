@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_home.view.*
 
 class ReviewAdapter(
     val likeClick: (Review) -> Unit,
-    val commentClick: (Unit) -> Unit,
+    val commentClick: () -> Unit,
     val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -63,8 +63,8 @@ class ReviewAdapter(
             commentText.text = review.comment.values.toTypedArray()[review.comment.size-1]
 
             like.setOnClickListener(View.OnClickListener { likeClick(review) })
-            commentImg.setOnClickListener(View.OnClickListener { commentClick })
-            commentText.setOnClickListener(View.OnClickListener { commentClick })
+            commentImg.setOnClickListener(View.OnClickListener { commentClick() })
+            commentText.setOnClickListener(View.OnClickListener { commentClick() })
         }
     }
 }
