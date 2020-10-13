@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.travelfriend.R
 import com.example.travelfriend.database.model.Review
+import com.example.travelfriend.util.LikeCompare
 import com.google.firebase.auth.FirebaseAuth
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.item_home.view.*
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.item_home.view.*
 
 class ReviewAdapter(
     val likeClick: (Review) -> Unit,
-    val commentClick: (Review) -> Unit,
+    val commentClick: (Unit) -> Unit,
     val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -53,20 +54,17 @@ class ReviewAdapter(
             image.pageCount = review.image.size
             image.setImageListener(imageListener)
 
-            val myUID = FirebaseAuth.getInstance().currentUser!!.uid
             like.isChecked = false
-            for (i in review.like) {
-                if (myUID == i.key) {
+                if (LikeCompare().likeCompare(review)) {
                     like.isChecked = true
-                    break
                 }
-            }
+
 
             commentText.text = review.comment.values.toTypedArray()[review.comment.size-1]
 
             like.setOnClickListener(View.OnClickListener { likeClick(review) })
-            commentImg.setOnClickListener(View.OnClickListener { commentClick(review) })
-            commentText.setOnClickListener(View.OnClickListener { commentClick(review) })
+            commentImg.setOnClickListener(View.OnClickListener { commentClick })
+            commentText.setOnClickListener(View.OnClickListener { commentClick })
         }
     }
 }
