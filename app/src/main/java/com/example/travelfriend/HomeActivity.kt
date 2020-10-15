@@ -4,43 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.travelfriend.database.model.Review
 import com.example.travelfriend.ui.adapter.ReviewAdapter
-import com.example.travelfriend.util.LikeCompare
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.*
 
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var adapter: ReviewAdapter
+    val reviews: MutableList<Review> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        adapter = ReviewAdapter({
-            val like = hashMapOf(
-                FirebaseAuth.getInstance().currentUser!!.uid to !LikeCompare().likeCompare(it)
-            )
-            FirebaseDatabase
-                .getInstance()
-                .reference
-                .child("Review")
-                .child(it.number)
-                .child("like")
-                .setValue(like)
-        }, {
-            startActivity(Intent(this, CommentActivity::class.java))
-        }, this)
-
-        val reviews: MutableList<Review> = mutableListOf()
-
         FirebaseDatabase.getInstance().reference.child("Review")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     reviews.clear()
                     for (i in dataSnapshot.children) {
@@ -74,7 +59,6 @@ class HomeActivity : AppCompatActivity() {
                                         }
                                     }
                                     reviews.add(review)
-                                    adapter.setReviews(reviews)
                                     val layoutManager = LinearLayoutManager(this@HomeActivity)
                                     home_recycler_view.adapter = adapter
                                     home_recycler_view.layoutManager = layoutManager
@@ -90,5 +74,38 @@ class HomeActivity : AppCompatActivity() {
                     println("The read failed: " + databaseError.code)
                 }
             })
+
+        adapter = ReviewAdapter(reviews, ::onClickLike, {
+            startActivity(Intent(this, CommentActivity::class.java))
+        }, this)
+    }
+
+    private fun setLikeToReviews(review: Review) {
+        for (i in 0 until reviews.size) {
+            if (reviews[i].number == review.number) {
+                reviews[i].like =
+                    mapOf(
+                        FirebaseAuth.getInstance().currentUser!!.uid to !(reviews[i].like[FirebaseAuth.getInstance().currentUser!!.uid]
+                            ?: false)
+                    )
+            }
+        }
+    }
+
+    private fun onClickLike(review: Review) {
+        setLikeToReviews(review)
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                adapter.notifyDataSetChanged()
+                for (r in reviews) {
+                    if (r.number == review.number) {
+                        FirebaseDatabase.getInstance().reference.child("Review")
+                            .child(review.number).child("like")
+                            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                            .setValue(r.like[FirebaseAuth.getInstance().currentUser!!.uid])
+                    }
+                }
+            }
+        }
     }
 }

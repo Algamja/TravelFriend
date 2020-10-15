@@ -9,18 +9,18 @@ import com.bumptech.glide.Glide
 import com.example.travelfriend.R
 import com.example.travelfriend.database.model.Review
 import com.example.travelfriend.util.LikeCompare
-import com.google.firebase.auth.FirebaseAuth
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.item_home.view.*
+import kotlin.reflect.KFunction1
 
 
 class ReviewAdapter(
-    val likeClick: (Review) -> Unit,
+    var reviews: List<Review>,
+    val likeClick: KFunction1<@ParameterName(name = "review") Review, Unit>,
     val commentClick: () -> Unit,
     val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var reviews: MutableList<Review> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
         return ReviewViewHolder(view)
@@ -32,10 +32,6 @@ class ReviewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ReviewViewHolder).bind(reviews[position])
-    }
-
-    fun setReviews(reviews: MutableList<Review>) {
-        this.reviews = reviews
     }
 
     inner class ReviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,12 +51,12 @@ class ReviewAdapter(
             image.setImageListener(imageListener)
 
             like.isChecked = false
-                if (LikeCompare().likeCompare(review)) {
-                    like.isChecked = true
-                }
+            if (LikeCompare().likeCompare(review)) {
+                like.isChecked = true
+            }
 
 
-            commentText.text = review.comment.values.toTypedArray()[review.comment.size-1]
+            commentText.text = review.comment.values.toTypedArray()[review.comment.size - 1]
 
             like.setOnClickListener(View.OnClickListener { likeClick(review) })
             commentImg.setOnClickListener(View.OnClickListener { commentClick() })

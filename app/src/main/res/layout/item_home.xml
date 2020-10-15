@@ -17,7 +17,7 @@
             android:id="@+id/item_home_image_carousel_view"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:fillColor="@color/colorBlue01"
+            app:fillColor="@color/colorBlue02"
             app:layout_constraintTop_toTopOf="parent"
             app:radius="6dp"
             app:strokeColor="@color/colorBlack01"
