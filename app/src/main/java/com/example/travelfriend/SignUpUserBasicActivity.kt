@@ -11,20 +11,15 @@ class SignUpUserBasicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_user_basic)
 
-
-
         sign_up_second_next_button.setOnClickListener(){
-
-            val input_name = sign_up_name_input.text.toString()
-            val input_phone = sign_up_phone_number_input.text.toString()
-            val email = intent.getStringExtra("eamil")
-            val pw = intent.getStringExtra("pw")
+            val inputName = sign_up_name_input.text.toString()
+            val inputPhone = sign_up_phone_number_input.text.toString()
+            val email = intent.getStringExtra("email")
 
             val intent = Intent(this,SignUpUserDetailActivity::class.java)
-            intent.putExtra("name",input_name)
-            intent.putExtra("phone",input_phone)
+            intent.putExtra("name",inputName)
+            intent.putExtra("phone",inputPhone)
             intent.putExtra("email",email)
-            intent.putExtra("pw",pw)
         startActivity(intent)
         }
     }
