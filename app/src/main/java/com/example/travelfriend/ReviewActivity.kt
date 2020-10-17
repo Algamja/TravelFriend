@@ -9,5 +9,6 @@ class ReviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_review)
 
 
+
     }
 }
