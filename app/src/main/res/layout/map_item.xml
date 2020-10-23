@@ -9,10 +9,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     <ImageView
+        android:id="@+id/plan_image"
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:src="@drawable/ic_circle"/>
-    <EditText
+    <TextView
+        android:id="@+id/plan_text"
         android:layout_width="0sp"
         android:layout_height="30sp"
         android:layout_weight="1"/>

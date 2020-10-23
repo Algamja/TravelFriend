@@ -9,27 +9,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.travelfriend.R
-import com.example.travelfriend.database.model.uidcomment
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.item_list.view.*
 import java.net.URL
 
 
 class CommentAdapter(val context: Context) : RecyclerView.Adapter<Holder1>() {
-    var listData = mutableListOf<uidcomment>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder1 {
+    var Data = mapOf<String, String>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder1 {    //어떤 data와 xml을 bind 시켜주는 역할(어떤 item을 쓰는지 정해줄 수 있음)
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list,parent,false)
         return Holder1(view)
     }
 
     override fun getItemCount(): Int {
-        return listData.size
+        return Data.size
     }
 
     override fun onBindViewHolder(holder: Holder1, position: Int) {
-        holder.commenttext.text=listData[position].comment
-        val imageurl = listData[position].image1
-        Glide.with(context).load(imageurl).into(holder.imageget)
+        val commentList = Data.values.toTypedArray()
+        val uid = Data.keys.toTypedArray()[position]
+        FirebaseDatabase.getInstance().reference.child("User").child(uid).child("image").addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                holder.commenttext.text=commentList[position]
+                val imageUrl = snapshot.value as String
+                Glide.with(context).load(imageUrl).into(holder.imageget)
+            }
+
+        })
     }
 
 }

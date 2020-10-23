@@ -1,11 +1,13 @@
 package com.example.travelfriend.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.travelfriend.CommentActivity
 import com.example.travelfriend.R
 import com.example.travelfriend.database.model.Review
 import com.example.travelfriend.util.LikeCompare
@@ -17,7 +19,6 @@ import kotlin.reflect.KFunction1
 class ReviewAdapter(
     var reviews: List<Review>,
     val likeClick: KFunction1<@ParameterName(name = "review") Review, Unit>,
-    val commentClick: () -> Unit,
     val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,12 +43,12 @@ class ReviewAdapter(
 
         fun bind(review: Review) {
             val imageListener =
-                ImageListener { position, imageView ->
-                    val image: Array<String> = review.image.values.toTypedArray()
-                    Glide.with(context).load(image[position]).into(imageView)
+                ImageListener { position, imageView ->  //ImageListener : 여러개 등록된 사진을 swipe할 수 있게 해주는 listener
+                    val image: Array<String> = review.image.values.toTypedArray()   //image에 해당하는 value들이 뽑혀서 array로 저장된다.
+                    Glide.with(context).load(image[position]).into(imageView)   //glide를 활용해 array에 등록된 image를 보여줌
                 }
 
-            image.pageCount = review.image.size
+            image.pageCount = review.image.size //swipe를 해주기 위해
             image.setImageListener(imageListener)
 
             like.isChecked = false
@@ -59,8 +60,16 @@ class ReviewAdapter(
             commentText.text = review.comment.values.toTypedArray()[review.comment.size - 1]
 
             like.setOnClickListener(View.OnClickListener { likeClick(review) })
-            commentImg.setOnClickListener(View.OnClickListener { commentClick() })
-            commentText.setOnClickListener(View.OnClickListener { commentClick() })
+            commentImg.setOnClickListener(View.OnClickListener {
+                val intent = Intent(context,CommentActivity::class.java)
+                intent.putExtra("reviewData",review) //review data 하나를 넘겨줌
+                context.startActivity(intent)   //adapter이기 때문에 context가 없어 이렇게 해줘야함
+            })
+            commentText.setOnClickListener(View.OnClickListener {
+                val intent = Intent(context,CommentActivity::class.java)
+                intent.putExtra("reviewData",review)
+                context.startActivity(intent)
+            })
         }
     }
 }

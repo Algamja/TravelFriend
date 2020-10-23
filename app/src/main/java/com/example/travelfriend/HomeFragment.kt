@@ -39,8 +39,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        FirebaseDatabase.getInstance().reference.child("Review")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        FirebaseDatabase.getInstance().reference.child("Review") //경로로 들어감 (없으면 생성)
+            .addListenerForSingleValueEvent(object : ValueEventListener {    //한번만 읽음
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     reviews.clear()
                     for (i in dataSnapshot.children) {
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
                             .getInstance()
                             .reference
                             .child("Review")
-                            .child(i.key ?: "")
+                            .child(i.key ?: "")                 //i.key경로로 들어가줌
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onCancelled(error: DatabaseError) {}
 
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
                                         }
                                     }
                                     reviews.add(review)
-                                    val layoutManager = LinearLayoutManager(myContext)
+                                   val layoutManager = LinearLayoutManager(myContext)
                                     home_recycler_view.adapter = adapter
                                     home_recycler_view.layoutManager = layoutManager
                                     home_recycler_view.setHasFixedSize(true)
@@ -90,9 +90,7 @@ class HomeFragment : Fragment() {
                 }
             })
 
-        adapter = ReviewAdapter(reviews, ::onClickLike, {
-            startActivity(Intent(myContext, CommentActivity::class.java))
-        }, myContext)
+        adapter = ReviewAdapter(reviews, ::onClickLike, myContext)
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
