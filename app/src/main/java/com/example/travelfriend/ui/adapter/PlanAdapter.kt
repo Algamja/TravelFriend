@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.travelfriend.R
 import com.example.travelfriend.database.model.Plan
-import kotlinx.android.synthetic.main.item_list.view.*
+import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.map_item.view.*
 
 class PlanAdapter(val context: Context) : RecyclerView.Adapter<Holder2>() {
