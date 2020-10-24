@@ -22,9 +22,9 @@ class CommentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
 
-        val getReview = intent.getSerializableExtra("reviewData")
-        val review = getReview as Review
-        val adapter = CommentAdapter(review.comment.values, this)
+        val getReview = intent.getSerializableExtra("reviewData") //reviews를 가져옴
+        val review = getReview as Review //data2변수에 review를 넣어줌
+        val adapter = CommentAdapter(review.comment.values, this)  //adapter에 review에 comment 부분만 넘겨주었음
         comment_recyclerView.adapter = adapter
         comment_recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -35,6 +35,7 @@ class CommentActivity : AppCompatActivity() {
                     comment_edit_text.text = null
                     review.comment[""] =
                         mapOf(FirebaseAuth.getInstance().currentUser!!.uid to comment)
+                  //입력해준 값을 review의 comment에 put하여줌
                     adapter.notifyDataSetChanged()
 
                     FirebaseDatabase.getInstance().reference.child("Review")

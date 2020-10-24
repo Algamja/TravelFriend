@@ -39,11 +39,10 @@ class SignUpUserDetailActivity : AppCompatActivity() {
             val database: FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef: DatabaseReference = database.getReference("User").child(uid)
             val dataclass = User(email, nickname, name, age, gender, phone)
-            myRef.setValue(dataclass)
-
+            database.setValue(dataclass)
+            //User경로 아래에 dataclass 형태로 데이터를 넣어준다.(db에 저장)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

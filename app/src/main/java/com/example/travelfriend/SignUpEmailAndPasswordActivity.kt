@@ -11,15 +11,17 @@ import kotlinx.android.synthetic.main.activity_sign_up_email_and_password.*
 
 class SignUpEmailAndPasswordActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
+  
     lateinit var email: String
     lateinit var pw1: String
     lateinit var pw2: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up_email_and_password)
 
         //이메일 회원가입 시키기 전 로딩바가 보이지 않게 설정
-        sign_up_create_email_loading_progress_bar.visibility = View.GONE
+        sign_up_create_email_loading_progress_bar.visibility = View.GONE //INVISIBLE 아님?
 
         auth = FirebaseAuth.getInstance()   //auth : 회원가입에 관련된 정보들을 쓸 수 있게해줌
         sign_up_first_next_button.setOnClickListener() {
