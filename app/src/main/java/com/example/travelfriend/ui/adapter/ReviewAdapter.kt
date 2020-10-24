@@ -43,9 +43,12 @@ class ReviewAdapter(
 
         fun bind(review: Review) {
             val imageListener =
-                ImageListener { position, imageView ->  //ImageListener : 여러개 등록된 사진을 swipe할 수 있게 해주는 listener
-                    val image: Array<String> = review.image.values.toTypedArray()   //image에 해당하는 value들이 뽑혀서 array로 저장된다.
-                    Glide.with(context).load(image[position]).into(imageView)   //glide를 활용해 array에 등록된 image를 보여줌
+                ImageListener { position, imageView ->
+                    //ImageListener : 여러개 등록된 사진을 swipe할 수 있게 해주는 listener
+                    val image: Array<String> =
+                        review.image.values.toTypedArray()   //image에 해당하는 value들이 뽑혀서 array로 저장된다.
+                    Glide.with(context).load(image[position])
+                        .into(imageView)   //glide를 활용해 array에 등록된 image를 보여줌
                 }
 
             image.pageCount = review.image.size //swipe를 해주기 위해
@@ -56,18 +59,21 @@ class ReviewAdapter(
                 like.isChecked = true
             }
 
-
-            commentText.text = review.comment.values.toTypedArray()[review.comment.size - 1]
+            if(review.comment.isNotEmpty()){
+                commentText.text = review.comment.values.toTypedArray()[review.comment.size - 1].values.toTypedArray()[0]
+            }else{
+                commentText.text = ""
+            }
 
             like.setOnClickListener(View.OnClickListener { likeClick(review) })
             commentImg.setOnClickListener(View.OnClickListener {
-                val intent = Intent(context,CommentActivity::class.java)
-                intent.putExtra("reviewData",review) //review data 하나를 넘겨줌
+                val intent = Intent(context, CommentActivity::class.java)
+                intent.putExtra("reviewData", review) //review data 하나를 넘겨줌
                 context.startActivity(intent)   //adapter이기 때문에 context가 없어 이렇게 해줘야함
             })
             commentText.setOnClickListener(View.OnClickListener {
-                val intent = Intent(context,CommentActivity::class.java)
-                intent.putExtra("reviewData",review)
+                val intent = Intent(context, CommentActivity::class.java)
+                intent.putExtra("reviewData", review)
                 context.startActivity(intent)
             })
         }

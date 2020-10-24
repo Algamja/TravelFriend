@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RadioButton
 import com.example.travelfriend.database.model.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_sign_up_user_detail.*
 import kotlinx.android.synthetic.main.activity_sign_up_user_detail.view.*
@@ -33,8 +34,10 @@ class SignUpUserDetailActivity : AppCompatActivity() {
             val email = intent.getStringExtra("email")?:""
             val name = intent.getStringExtra("name")?:""
             val phone = intent.getStringExtra("phone")?:""
-            //User경로 생성
-            val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("User")
+            val uid = intent.getStringExtra("uid")?:""
+
+            val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+            val myRef: DatabaseReference = database.getReference("User").child(uid)
             val dataclass = User(email, nickname, name, age, gender, phone)
             database.setValue(dataclass)
             //User경로 아래에 dataclass 형태로 데이터를 넣어준다.(db에 저장)

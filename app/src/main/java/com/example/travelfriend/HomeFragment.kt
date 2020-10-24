@@ -55,9 +55,9 @@ class HomeFragment : Fragment() {
                                 override fun onDataChange(snapshot: DataSnapshot) { //현재 경로(날짜) 아래에 변동사항이 있으면 캐치하여 저장
                                     val review = Review()         //변수에 class를 담아줌
                                     for (j in snapshot.children) {    //j에 child가 하나씩 들어가게된다.
-                                        when (j.key) {
-                                            "comment" -> {        //child가 comment일 경우
-                                                review.comment = j.value as HashMap<String, String>     //value에 값이 등록이 되어 있을 경우 value변수에 값이 등록되나.
+                                        when (j.key) {   
+                                            "comment" -> {//child가 comment일 경우
+                                                review.comment = j.value as MutableMap<String, Map<String, String>> //value에 값이 등록이 되어 있을 경우 value변수에 값이 등록되나.
                                             }
                                             "image" -> {
                                                 review.image = j.value as HashMap<String, String>
