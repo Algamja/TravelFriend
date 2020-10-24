@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
                                     for (j in snapshot.children) {
                                         when (j.key) {
                                             "comment" -> {
-                                                review.comment = j.value as HashMap<String, String>
+                                                review.comment = j.value as MutableMap<String, Map<String, String>>
                                             }
                                             "image" -> {
                                                 review.image = j.value as HashMap<String, String>
