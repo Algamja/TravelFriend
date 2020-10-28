@@ -5,9 +5,10 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/setting_mypage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="설정1"
+        android:text="마이페이지"
         />
 
     <Button
