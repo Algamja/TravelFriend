@@ -95,28 +95,31 @@ class HomeFragment : Fragment() {
     }
 
     private fun setLikeToReviews(review: Review) {
-        for (i in 0 until reviews.size) { //몇번쨰 이기 모르기 떄문에 size만큼 돌아야 한다.
-            if (reviews[i].number == review.number) {   //몇번쨰 인지를 체크
-                reviews[i].like =   //
-                    mapOf(
+        for (i in 0 until reviews.size) { //우리가 좋아요를 누른게 어떤 review인지 모르기 떄문에 size만큼 돌아야 한다.
+                                    //여기서 reviews의 size는 reviews에 class값의 위인 날짜가 된다(2)
+            if (reviews[i].number == review.number) {  //0번째부터 비교해줌 = review.number(좋아요를 누른 review의 번호)
+                reviews[i].like =
+                    mapOf(  //reviews의 key(uid) to 우리가 좋아요를 누른 uid의 값(true or false) 아무것도 안해주었다? : false
                         FirebaseAuth.getInstance().currentUser!!.uid to !(reviews[i].like[FirebaseAuth.getInstance().currentUser!!.uid]
                             ?: false)
+
                     )
             }
         }
     }
 
-    private fun onClickLike(review: Review) {
-        setLikeToReviews(review)
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                adapter.notifyDataSetChanged()
-                for (r in reviews) {
-                    if (r.number == review.number) {
+    private fun onClickLike(review: Review) {   //onClickLike : 좋아요를 눌렀을떄 이러이러한 것들을 할꺼다
+        setLikeToReviews(review)   //우선 좋아요를 어떤것을 눌렀는지 파악해주고 세팅
+        GlobalScope.launch {       //하나의 코루틴을 생성함 이 함수가 끝나고 나서 다른 것들을 하게 하기 위해(이 함수가 제일 먼저 돌아감)
+            withContext(Dispatchers.Main) { //코루틴이 어디에서 실행되는지 Main(UI)에서 한다는 뜻
+                adapter.notifyDataSetChanged() //notifyDataSetChanged -> adapter에 reviews를 넘겨줬는데 reviews가 자동으로 업데이트 됨
+                for (r in reviews) {    //reviews 클래스의 덩어리(날짜 갯수) 만큼 돌게된다.
+                    if (r.number == review.number) {  //내가 입력한 number와 r.number가 같다면
                         FirebaseDatabase.getInstance().reference.child("Review")
                             .child(review.number).child("like")
                             .child(FirebaseAuth.getInstance().currentUser!!.uid)
                             .setValue(r.like[FirebaseAuth.getInstance().currentUser!!.uid])
+
                     }
                 }
             }
