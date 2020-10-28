@@ -28,17 +28,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".PlanActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ReviewActivity" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SignUpUserBasicActivity" />
         <activity android:name=".SignUpUserDetailActivity" />
@@ -46,7 +46,7 @@
         <activity android:name=".MainActivity" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDX4I6hWNs64eMJkAFWVymaJmzgKfbIriM" />
+            android:value="AIzaSyA_XsftM2rSPTqYSl7QFcdYP3-3Pbf1Yj4" />
 
         <uses-library
             android:name="org.apache.http.legacy"

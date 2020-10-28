@@ -1,14 +1,12 @@
 package com.example.travelfriend
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RadioButton
 import com.example.travelfriend.database.model.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_sign_up_user_detail.*
-import kotlinx.android.synthetic.main.activity_sign_up_user_detail.view.*
 
 class SignUpUserDetailActivity : AppCompatActivity() {
 
@@ -35,11 +33,13 @@ class SignUpUserDetailActivity : AppCompatActivity() {
             val name = intent.getStringExtra("name")?:""
             val phone = intent.getStringExtra("phone")?:""
             val uid = intent.getStringExtra("uid")?:""
+            val image ="https://firebasestorage.googleapis.com/v0/b/trip-friend-6e3e3.appspot.com/o/basicperson.png?alt=media&token=b0aab2df-3f77-4cb3-bb80-644ca1955350"
+
 
             val database: FirebaseDatabase = FirebaseDatabase.getInstance()
             val myRef: DatabaseReference = database.getReference("User").child(uid)
-            val dataclass = User(email, nickname, name, age, gender, phone)
-            database.setValue(dataclass)
+            val dataclass = User(email, nickname, name, age, gender, phone, image)
+            myRef.setValue(dataclass)
             //User경로 아래에 dataclass 형태로 데이터를 넣어준다.(db에 저장)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
