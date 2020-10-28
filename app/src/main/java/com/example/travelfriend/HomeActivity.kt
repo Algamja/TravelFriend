@@ -27,6 +27,13 @@ class HomeActivity : AppCompatActivity() {
                     ).commit()
                     false
                 }
+                R.id.bottom_menu_setting -> {
+                    transaction.replace(    //fragment가 해당 layout으로 대체됨
+                        R.id.fragment_layout,
+                        SettingFragment()
+                    ).commit()
+                    false
+                }
                 else->{
                     false
                 }
