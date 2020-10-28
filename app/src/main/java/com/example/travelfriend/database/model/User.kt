@@ -3,9 +3,10 @@ package com.example.travelfriend.database.model
 import android.net.Uri
 
 
-data class User(val email: String, val nickname: String, val name: String, val age: String, val gender: String, val phonenumber:String, val image: String) {
+data class User(var email: String, var nickname: String, var name: String, var age: String, var gender: String, var phonenumber:String, var image: String) {
 
-
+    constructor()
+    :this("","","","","","","")
 
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.travelfriend">
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -27,23 +28,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PlanActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Mypage">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity android:name=".PlanActivity">
         </activity>
         <activity android:name=".ReviewActivity" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SignUpUserBasicActivity" />
         <activity android:name=".SignUpUserDetailActivity" />
         <activity android:name=".SignUpEmailAndPasswordActivity" />
         <activity android:name=".MainActivity" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyA_XsftM2rSPTqYSl7QFcdYP3-3Pbf1Yj4" />
